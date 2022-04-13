@@ -17,6 +17,7 @@ class PengajuanCutiController extends Controller
     {
         return view('pengajuan.index', [
             'name' => Auth::user()->name,
+            'id' => Auth::user()->id,
         ]);
     }
 
@@ -38,7 +39,35 @@ class PengajuanCutiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $request->validate([
+            'id_users' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_selesai' => 'required',
+            'jenis_cuti' => 'required',
+            'keterangan' => 'required',
+            'bukti' => 'required',
+            'nip' => 'required',
+        ]);
+
+        // upload file
+        $file = $request->file('bukti');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $tujuan_upload = 'data_file';
+        $file->move($tujuan_upload, $nama_file);
+
+        //insert data
+        $cuti = new Cuti();
+        $cuti->id_users = $request->id_users;
+        $cuti->tanggal_mulai = $request->tanggal_mulai;
+        $cuti->tanggal_selesai = $request->tanggal_selesai;
+        $cuti->jenis_cuti = $request->jenis_cuti;
+        $cuti->keterangan = $request->keterangan;
+        $cuti->bukti_cuti = $request->bukti;
+        $cuti->nip = $request->nip;
+        $cuti->save();
+
+        return redirect('/pengajuan')->with('status', 'Data berhasil ditambahkan');
     }
 
     /**

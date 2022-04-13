@@ -1,6 +1,14 @@
 @extends('layouts.layout_master')
 
 @section('content')
+
+{{-- notification succes --}}
+@if(session('status'))
+<div class="alert alert-success" role="alert">
+    {{session('status')}}
+</div>
+@endif
+
 <!-- Basic -->
 <div class="col-xl">
     <div class="card mb-4">
@@ -9,11 +17,26 @@
             <small class="text-muted float-end">Default label</small>
         </div>
         <div class="card-body">
-            <form>
+
+            {{-- notfication gagal --}}
+            @if(count($errors) > 0)
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+
+            <form method="post" action="pengajuan" enctype="multipart/form-data">
+                @csrf
                 <div class="mb-3">
                     <label class="form-label" for="basic-default-fullname">Nama Lengkap</label>
-                    <input type="text" class="form-control" name="name" id="basic-default-fullname" value="{{ $name }}"
-                        readonly />
+                    <input type="text" class="form-control" name="" id="basic-default-fullname" value="{{ $name }}"
+                        disabled />
+                    <input type="hidden" name="id_users" value="{{ $id }}">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="basic-default-fullname">NIP</label>

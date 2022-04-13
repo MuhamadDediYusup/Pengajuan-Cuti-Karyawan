@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\PengajuanCutiController;
+use App\Http\Controllers\StatusPengajuan;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,6 @@ Route::get('/dashboard', function () {
 
 // route untuk menampilkan halaman cuti
 Route::resource('pengajuan', PengajuanCutiController::class)->middleware(['auth']);
+Route::get('status_pengajuan', [StatusPengajuan::class, 'index'])->middleware(['auth']);
 
 require __DIR__ . '/auth.php';

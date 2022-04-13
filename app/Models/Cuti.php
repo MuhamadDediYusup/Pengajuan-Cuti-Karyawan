@@ -9,9 +9,17 @@ class Cuti extends Model
 {
     use HasFactory;
 
-    protected $table = 'cuti';
+    protected $table = 'cutis';
     protected $primaryKey = 'id';
-    protected $fillable = ['id_users', 'cuti_type', 'cuti_start', 'cuti_end', 'cuti_total', 'cuti_remaining', 'cuti_status'];
+    protected $fillable = [
+        'id_users',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'jenis_cuti',
+        'keterangan',
+        'bukti',
+        'nip',
+    ];
 
     public function user()
     {

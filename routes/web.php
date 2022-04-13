@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CutiController;
+use App\Http\Controllers\PengajuanCutiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', [
+        'user' => auth()->user(),
+    ]);
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+// route untuk menampilkan halaman cuti
+Route::resource('pengajuan', PengajuanCutiController::class)->middleware(['auth']);
+
+require __DIR__ . '/auth.php';
